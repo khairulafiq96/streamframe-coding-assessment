@@ -1,4 +1,34 @@
+import {useDispatch,connect} from 'react-redux'
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
+import { addTask } from '../actions/tasks';
+
 function Popup({visible, onClose}){
+
+    const [title, setTitle] = useState("");
+    const [status,setStatus] = useState("");
+    const [parent, setParent] = useState("");
+    const dispatch = useDispatch();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        //TODO : Please do not submit form with empty title, status & optional parent
+
+        const unique_id = uuid();
+        var obj = {
+            //dynamic property
+            [unique_id] : {
+                title : title,
+                status : status,
+                parent : parent,
+            }
+        }
+        dispatch(addTask(obj))
+        //Closing the popup
+        onClose()
+    }
+
     return(
     <div class='fixed w-screen h-screen 
                 flex items-center justify-center
@@ -7,18 +37,29 @@ function Popup({visible, onClose}){
             <div>Create new task</div>
             <form class='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
-                    <label>Title : 
-                        <input type="text" name="title"></input>
+                    <label>Title {title}: 
+                        <input type="text" name="title" 
+                               onChange={e=>setTitle(e.target.value)}
+                               value={title}></input>
                     </label>
-                    <label for="status">Status :
-                        <select  name="status" id="status">
+                    <label htmlFor="status">Status {status} :
+                        <select name="status" id="status"
+                                value={status}
+                                onChange={e=>setStatus(e.target.value)}>
+                            <option value="none">None</option>
                             <option value="inprogress">In Progress</option>
                             <option value="done">Done</option>
                             <option value="complete">Complete</option>
                         </select>
                     </label>
-                    <label for="parent">Parent :
-                        <select name="status" id="status">
+                    <label htmlFor="parent">Parent {parent} :
+                        <select name="parent" id="parent"
+                                value={parent}
+                                onChange={e=>setParent(e.target.value)}>
+                            <option value="none">None</option>
+                            <option value="none">None</option>
+                            <option value="none">None</option>
+                            <option value="none">None</option>
                         </select>
                     </label>
                 </div>
@@ -26,10 +67,16 @@ function Popup({visible, onClose}){
                     <input type="text" name="title"></input>
                 </label>
             </form>
-            <button> Create new task</button>
+            <button onClick={e=>handleSubmit(e)}> Create new task</button>
             <button onClick={onClose}> Close</button>
        </div>
     </div>)
 }
 
-export default Popup;
+function mapStateToProps({tasks}){
+    return {
+        tasks
+    }
+}
+
+export default connect(mapStateToProps)(Popup);

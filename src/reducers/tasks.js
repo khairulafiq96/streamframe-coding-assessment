@@ -4,7 +4,7 @@ export default function tasks(state = null, action){
     switch(action.type){
         
         case ADD_TASK:
-            return action.tasks
+            return {...state, ...action.tasks}
 
         default:
             return state
