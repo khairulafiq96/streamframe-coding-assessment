@@ -16,7 +16,7 @@ function Tasks() {
                 <th>Title</th>
                 <th>Status</th>
             </tr>
-            {Object.keys(tasks).map(item=>{
+            {tasks ? Object.keys(tasks).map(item=>{
             return (
                 <tr key={item}>
                     <td>{item}</td>
@@ -24,7 +24,7 @@ function Tasks() {
                     <td>{tasks[item]['status']}</td>
                 </tr>
             )
-        })}
+            }) : <div>You do't have tasks</div> }
         </tbody>
         </table>
         

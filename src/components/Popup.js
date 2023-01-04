@@ -1,7 +1,7 @@
 import {useDispatch,useSelector} from 'react-redux'
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { addTask } from '../actions/tasks';
+import { addChildTask, addTask } from '../actions/tasks';
 
 function Popup({visible, onClose}){
 
@@ -25,9 +25,15 @@ function Popup({visible, onClose}){
                 parent : parent,
             }
         }
-        dispatch(addTask(obj))
-        //Closing the popup
-        onClose()
+        if (!parent){
+            dispatch(addTask(obj))
+            //Closing the popup
+            onClose()
+        } else {
+            dispatch(addChildTask(obj))
+            onClose()
+        }
+        
     }
 
     return(
@@ -58,11 +64,11 @@ function Popup({visible, onClose}){
                                 value={parent}
                                 onChange={e=>setParent(e.target.value)}>
                             <option value="none">None</option>
-                            {Object.keys(tasks).map(item=>{
+                            {tasks ? Object.keys(tasks).map(item=>{
                                 return(
                                     <option value={item}>{tasks[item]['title']}</option>
                                 )
-                            })}
+                            }) : <></>}
                         </select>
                     </label>
                 </div>
