@@ -1,4 +1,4 @@
-import {useDispatch} from 'react-redux'
+import {useDispatch,useSelector} from 'react-redux'
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { addTask } from '../actions/tasks';
@@ -9,6 +9,7 @@ function Popup({visible, onClose}){
     const [status,setStatus] = useState("");
     const [parent, setParent] = useState("");
     const dispatch = useDispatch();
+    const tasks = useSelector(store => store.tasks);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,9 +58,11 @@ function Popup({visible, onClose}){
                                 value={parent}
                                 onChange={e=>setParent(e.target.value)}>
                             <option value="none">None</option>
-                            <option value="none">None</option>
-                            <option value="none">None</option>
-                            <option value="none">None</option>
+                            {Object.keys(tasks).map(item=>{
+                                return(
+                                    <option value={item}>{tasks[item]['title']}</option>
+                                )
+                            })}
                         </select>
                     </label>
                 </div>

@@ -3,10 +3,10 @@ import Tasks from './Tasks';
 
 function Content() {
   return (
-    <>
+    <div>
         <CreateTask></CreateTask>
         <Tasks></Tasks>
-    </>
+    </div>
   );
 }
 
