@@ -1,7 +1,9 @@
 function Header() {
   return (
-    <div class='bg-red-700'>
-        Header
+    <div class='bg-slate-500'>
+        <div class='mx-auto container py-5'>
+            Header
+        </div>
     </div>
   );
 }
