@@ -1,4 +1,4 @@
-import {useDispatch,connect} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { addTask } from '../actions/tasks';
@@ -73,10 +73,5 @@ function Popup({visible, onClose}){
     </div>)
 }
 
-function mapStateToProps({tasks}){
-    return {
-        tasks
-    }
-}
 
-export default connect(mapStateToProps)(Popup);
+export default Popup;
