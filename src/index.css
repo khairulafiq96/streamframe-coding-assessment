@@ -9,9 +9,29 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: white;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button {
+  border : solid 1px darkgray;
+  background-color: slategray;
+  padding: 0.8rem;
+}
+
+body.active-modal {
+  overflow-y:  hidden;
+}
+
+input[type=text] {
+  color: black;
+}
+
+select {
+  color: black;
 }
