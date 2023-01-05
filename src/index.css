@@ -35,3 +35,16 @@ input[type=text] {
 select {
   color: black;
 }
+
+table
+{
+ width: 100%;
+ border-collapse: collapse;
+ text-align: left;
+ table-layout: fixed;
+}
+
+th,td {
+  border-bottom: 1px solid lightgray;
+  padding: 1rem 1rem 1rem 0rem;
+}
