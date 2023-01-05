@@ -24,6 +24,10 @@ button {
   padding: 0.8rem;
 }
 
+button.small {
+  padding: 0.1rem 0.6rem;
+}
+
 body.active-modal {
   overflow-y:  hidden;
 }
@@ -47,4 +51,17 @@ table
 th,td {
   border-bottom: 1px solid lightgray;
   padding: 1rem 1rem 1rem 0rem;
+}
+
+tbody :hover {
+  background-color: #868686;
+  cursor: pointer;
+}
+
+td.child {
+  padding-left: 1.5rem;
+}
+
+th.right, td.right {
+  text-align: right;
 }

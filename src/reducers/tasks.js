@@ -8,6 +8,9 @@ export default function tasks(state = null, action){
             return {...state, ...action.tasks}
 
         case ADD_CHILDTASK:
+            //TODO : for selecting all of the ID in create task parent selection,
+            //binary tree search DFS/BFS, to search for the parent, and append the values
+            //searching in nested object react
             const taskKey = Object.keys(action.tasks)
             window.alert(JSON.stringify(state[action.tasks[taskKey[0]]['parent']]))
             //Get the parent id inside task
