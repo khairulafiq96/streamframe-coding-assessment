@@ -1,9 +1,8 @@
-import {useDispatch,useSelector} from 'react-redux'
-import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
-import { addChildTask, addTask } from '../actions/tasks';
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { editTask } from "../actions/tasks";
 
-function Popup({visible, onClose}){
+function EditTaskPopup ({props,visible, onClose, taskId}){
 
     const [title, setTitle] = useState("");
     const [status,setStatus] = useState("");
@@ -14,37 +13,35 @@ function Popup({visible, onClose}){
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        //TODO : Please do not submit form with empty title, status & optional parent
-
-        const unique_id = uuid();
         var obj = {
             //dynamic property
-            [unique_id] : {
+            [taskId] : {
                 title : title,
                 status : status,
-                parent : parent ? parent : unique_id,
+                parent : parent ? parent : taskId,
             }
         }
-        if (!parent){
-            dispatch(addTask(obj))
-            //Closing the popup
-            onClose()
-        } else {
-            dispatch(addChildTask(obj))
-            onClose()
-        }
+
+        dispatch(editTask(obj))
         
     }
 
+    useEffect(()=>{
+        setTitle(props['title'])
+        setStatus(props['status'])
+        setParent(props['parent'])
+    },[])
+
     return(
-    <div class='fixed w-screen h-screen 
+       <div class='fixed w-screen h-screen 
                 flex items-center justify-center
                 inset-0 bg-black bg-opacity-30 backdrop-blur-sm'>
-       <div class='bg-slate-500 p-5'>
-            <div>Create new task</div>
+        <div class='bg-slate-500 p-5'>
+            <div>Edit Task</div>
+            {JSON.stringify(props)}
             <form class='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
-                    <label>Title {title}: 
+                    <label>Title {props['title']}: 
                         <input type="text" name="title" 
                                onChange={e=>setTitle(e.target.value)}
                                value={title}></input>
@@ -63,21 +60,22 @@ function Popup({visible, onClose}){
                         <select name="parent" id="parent"
                                 value={parent}
                                 onChange={e=>setParent(e.target.value)}>
-                            <option value="">None</option>
+                            <option value="none">None</option>
                             {tasks ? Object.keys(tasks).map(item=>{
                                 return(
                                     <option value={item}>{tasks[item]['title']}</option>
                                 )
-                            }) : null}
+                            }) : <></>}
                         </select>
                     </label>
                 </div>
+
             </form>
-            <button onClick={e=>handleSubmit(e)}> Create new task</button>
+            <button onClick={e=>handleSubmit(e)}>Edit Task</button>
             <button onClick={onClose}> Close</button>
        </div>
-    </div>)
+    </div>
+    )
 }
 
-
-export default Popup;
+export default EditTaskPopup;
