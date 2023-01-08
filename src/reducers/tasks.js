@@ -1,7 +1,7 @@
 import { ADD_TASK } from "../actions/tasks";
 import { ADD_CHILDTASK } from "../actions/tasks";
 import { EDIT_TASK } from "../actions/tasks";
-import { filterTaskId } from "../utils/General";
+import { filterTaskId,getParent, searchObj } from "../utils/General";
 
 export default function tasks(state = null, action){
     switch(action.type){
@@ -14,17 +14,36 @@ export default function tasks(state = null, action){
             //binary tree search DFS/BFS, to search for the parent, and append the values
             //searching in nested object react
             //Check out flatten deep object javascript
-            const taskKey = Object.keys(action.tasks)
-            window.alert(JSON.stringify(state[action.tasks[taskKey[0]]['parent']]))
+            const parentKey = getParent(action.tasks)
+            //window.alert(JSON.stringify(getParent(action.tasks)))
             //Get the parent id inside task
             //Append the value of state[parentid] values with the payload (task)
 
-            return {...state, [action.tasks[taskKey[0]]['parent']] : {...state[action.tasks[taskKey[0]]['parent']], ...action.tasks}}
+            return {...state, [parentKey] : {...state[parentKey], ...action.tasks}}
         
         case EDIT_TASK:
-            //window.alert(JSON.stringify(action.tasks))
-            const parentID = filterTaskId(action.tasks)
-            return {...state, [parentID] : {...state[parentID], ...action.tasks[parentID]}}
+            
+            const taskId = filterTaskId(action.tasks)
+            const parentId = getParent(action.tasks)
+            //For parent
+            if(taskId == parentId){
+                return {...state, [taskId] : {...state[taskId], ...action.tasks[taskId]}}
+            }  else {
+                //For child
+                const parentIdState = searchObj(state, taskId)
+                //To update the latest parent
+                if(parentIdState['parent']!==parentId){
+                    window.alert("Deleting item")
+                    delete state[parentIdState['parent']][taskId]
+                }
+                
+                return {...state, [parentId] : {...state[parentId],
+                                                [taskId] : {
+                                                            ...state[parentId][taskId],
+                                                            ...action.tasks[taskId]
+                                                }}}
+            }
+           
         default:
             return state
     }
