@@ -1,7 +1,7 @@
 import { ADD_TASK } from "../actions/tasks";
 import { ADD_CHILDTASK } from "../actions/tasks";
 import { EDIT_TASK } from "../actions/tasks";
-import { filterTaskId,getParent, searchObj } from "../utils/General";
+import { filterTaskId,getParent, searchObj, updateParentStatus } from "../utils/General";
 
 export default function tasks(state = null, action){
     switch(action.type){
@@ -18,16 +18,18 @@ export default function tasks(state = null, action){
             //window.alert(JSON.stringify(getParent(action.tasks)))
             //Get the parent id inside task
             //Append the value of state[parentid] values with the payload (task)
-
-            return {...state, [parentKey] : {...state[parentKey], ...action.tasks}}
+            var newParentState = {...state, [parentKey] : {...state[parentKey], ...action.tasks}}
+            return updateParentStatus(newParentState, parentKey)
         
         case EDIT_TASK:
             
             const taskId = filterTaskId(action.tasks)
             const parentId = getParent(action.tasks)
+            //Checking for parent update
             //For parent
             if(taskId == parentId){
-                return {...state, [taskId] : {...state[taskId], ...action.tasks[taskId]}}
+                var newParentState = {...state, [taskId] : {...state[taskId], ...action.tasks[taskId]}}
+                return updateParentStatus(newParentState, taskId)
             }  else {
                 //For child
                 const parentIdState = searchObj(state, taskId)
@@ -36,12 +38,13 @@ export default function tasks(state = null, action){
                     window.alert("Deleting item")
                     delete state[parentIdState['parent']][taskId]
                 }
-                
-                return {...state, [parentId] : {...state[parentId],
+                var newParentState = {...state, [parentId] : {...state[parentId],
                                                 [taskId] : {
                                                             ...state[parentId][taskId],
                                                             ...action.tasks[taskId]
                                                 }}}
+                //LEL to update the previous parent status, nested function is called
+                return updateParentStatus(updateParentStatus(newParentState, parentIdState['parent']), parentId)
             }
            
         default:

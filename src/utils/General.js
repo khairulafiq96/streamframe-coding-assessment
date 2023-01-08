@@ -27,3 +27,30 @@ export function getParent(target){
     return target[taskKey[0]]['parent']
 }
 
+//Todo : Unable to update the previous parent of the updated status
+export function updateParentStatus (obj,parentId){
+    const childTasks = filterTaskId(obj[parentId])
+    var done = []
+    childTasks.forEach((task)=>{
+        if(obj[parentId][task]['status'] === 'In Progress'){
+            if(obj[parentId]['status'] === 'Complete' || obj[parentId]['status'] === 'Done'){
+                obj[parentId]['status'] = 'Done'
+            } else {
+                obj[parentId]['status'] = 'In Progress'
+            }
+        } else if (obj[parentId][task]['status'] === 'Done' || obj[parentId][task]['status'] === 'Complete'){
+            done.push(task)
+        }
+    })
+
+    if (done.length === childTasks.length){
+        obj[parentId]['status'] = 'Complete'
+        childTasks.forEach((task)=>{
+            obj[parentId][task]['status'] = 'Complete'
+        })
+    }
+
+    return obj
+
+}
+
