@@ -11,7 +11,6 @@ import { searchObj } from "../utils/General";
 function Tasks() {
 
     const tasks = useSelector(store => store.tasks);
-    const[displayChild,setDisplayChild]=useState(true);
     const[displayEditTaskPopup, setDisplayEditTaskPopup]=useState(false)
     const[task, setTask]=useState("")
 
@@ -43,15 +42,14 @@ function Tasks() {
             return (
                 <>
                 <tr key={item} onClick={()=>editTask(item)}>
-                    <td>{filterTaskId(tasks[item]).length > 0 ? 
-                        <button class='small' onClick={()=>setDisplayChild(!displayChild)}>&#8595;</button> : null} {JSON.stringify(displayChild)} {item}</td>
+                    <td>{item}</td>
                     <td>{tasks[item]['title']}</td>
                     <td class='right'>{tasks[item]['status']}</td>
                 </tr>
                 {filterTaskId(tasks[item]).map(child=>{
                         return(
                             <tr  onClick={()=>editTask(child)}>
-                                <td class='child'>&#x2022; {child}</td>
+                                <td class='child'>{child}</td>
                                 <td>{tasks[item][child]['title']}</td>
                                 <td class='right'>{tasks[item][child]['status']}</td>
                             </tr>

@@ -22,6 +22,14 @@ export function searchObj(tasks, target){
     }
 }
 
+export function editParameter(taskId, parentId){
+    if(taskId === parentId){
+        return true
+    } else {
+        return false
+    }
+}
+
 export function getParent(target){
     const taskKey = Object.keys(target)
     return target[taskKey[0]]['parent']

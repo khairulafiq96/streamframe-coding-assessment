@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editTask } from "../actions/tasks";
+import { editParameter } from "../utils/General";
 
 function EditTaskPopup ({props,visible, onClose, taskId}){
 
     const [title, setTitle] = useState("");
     const [status,setStatus] = useState("");
     const [parent, setParent] = useState("");
+    const [isParent, setIsParent] = useState(false)
     const dispatch = useDispatch();
     const tasks = useSelector(store => store.tasks);
 
@@ -30,6 +32,7 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
         setTitle(props['title'])
         setStatus(props['status'])
         setParent(props['parent'])
+        setIsParent(editParameter(taskId,props['parent']))
     },[])
 
     return(
@@ -38,16 +41,15 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
                 inset-0 bg-black bg-opacity-30 backdrop-blur-sm'>
         <div class='bg-slate-500 p-5'>
             <div>Edit Task</div>
-            {JSON.stringify(props)}
             <form class='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
-                    <label>Title {props['title']}: 
+                    <label>Title : 
                         <input type="text" name="title" 
                                onChange={e=>setTitle(e.target.value)}
                                value={title}></input>
                     </label>
-                    <label htmlFor="status">Status {status} :
-                        <select name="status" id="status"
+                    <label htmlFor="status">Status :
+                        <select disabled={isParent} name="status" id="status"
                                 value={status}
                                 onChange={e=>setStatus(e.target.value)}>
                             <option value="">None</option>
@@ -56,8 +58,8 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
                             <option value="Complete">Complete</option>
                         </select>
                     </label>
-                    <label htmlFor="parent">Parent {parent} :
-                        <select name="parent" id="parent"
+                    <label htmlFor="parent">Parent :
+                        <select disabled={isParent} name="parent" id="parent"
                                 value={parent}
                                 onChange={e=>setParent(e.target.value)}>
                             <option value="none">None</option>
