@@ -14,18 +14,22 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        var obj = {
-            //dynamic property
-            [taskId] : {
-                title : title,
-                status : status,
-                parent : parent ? parent : taskId,
+        //Checking for null form parameters
+        if(title && status){
+            var obj = {
+                //dynamic property
+                [taskId] : {
+                    title : title,
+                    status : status,
+                    parent : parent ? parent : taskId,
+                }
             }
-        }
 
-        dispatch(editTask(obj))
-        onClose()
+            dispatch(editTask(obj))
+            onClose()
+        } else {
+            window.alert("Please provide the title and status" )
+        }
     }
 
     useEffect(()=>{

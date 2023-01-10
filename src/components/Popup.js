@@ -5,44 +5,48 @@ import { addChildTask, addTask } from '../actions/tasks';
 
 function Popup({visible, onClose}){
 
-    const [title, setTitle] = useState("");
-    const [status,setStatus] = useState("");
+    const [title, setTitle] = useState(null);
+    const [status,setStatus] = useState(null);
     const [parent, setParent] = useState("");
     const dispatch = useDispatch();
     const tasks = useSelector(store => store.tasks);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        //TODO : Please do not submit form with empty title, status & optional parent
-
-        const unique_id = uuid();
-        var obj = {
-            //dynamic property
-            [unique_id] : {
-                title : title,
-                status : status,
-                parent : parent ? parent : unique_id,
+        //Checking for null form parameters
+        if(title && status){
+            const unique_id = uuid();
+            var obj = {
+                //dynamic property
+                [unique_id] : {
+                    title : title,
+                    status : status,
+                    parent : parent ? parent : unique_id,
+                }
             }
-        }
-        if (!parent){
-            dispatch(addTask(obj))
-            //Closing the popup
-            onClose()
+            if (!parent){
+                dispatch(addTask(obj))
+                //Closing the popup
+                onClose()
+            } else {
+                dispatch(addChildTask(obj))
+                onClose()
+            }
         } else {
-            dispatch(addChildTask(obj))
-            onClose()
+            window.alert("Please provide the title and status" )
         }
+
+       
         
     }
 
     return(
-    <div class='fixed w-screen h-screen 
+    <div className='fixed w-screen h-screen 
                 flex items-center justify-center
                 inset-0 bg-black bg-opacity-30 backdrop-blur-sm'>
-       <div class='bg-slate-500 p-5'>
+       <div className='bg-slate-500 p-5'>
             <div>Create new task</div>
-            <form class='flex flex-col py-5 space-y-2'>
+            <form className='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
                     <label>Title : 
                         <input type="text" name="title" 
@@ -74,8 +78,8 @@ function Popup({visible, onClose}){
                     </label>
                 </div>
             </form>
-            <div class='flex space-x-5'>
-                <button onClick={e=>handleSubmit(e)}>Edit Task</button>
+            <div className='flex space-x-5'>
+                <button onClick={e=>handleSubmit(e)}>Create Task</button>
                 <button onClick={onClose}> Close</button>
             </div>
        </div>
