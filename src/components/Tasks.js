@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { filterTaskId } from "../utils/General"; 
-import { useState } from "react";
+import React,{ useState } from "react";
 import EditTaskPopup from "./EditTaskPopup";
 import { searchObj, dependenciesStatus } from "../utils/General";
 
@@ -28,15 +28,15 @@ function Tasks() {
     }
 
     return (
-      <div class='flex flex-col space-y-5 pt-5'>
-        <div class='text-4xl'>Your Tasks</div>
+      <div className='flex flex-col space-y-5 pt-5'>
+        <div className='text-4xl'>Your Tasks</div>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
-                    <th> Status
-                        <select name="filter" id="filter"
+                    <th> Status : 
+                        <select className='ml-2' name="filter" id="filter"
                                     value={filter}
                                     onChange={e=>setFilter(e.target.value)}>
                                 <option value="">All</option>
@@ -52,8 +52,8 @@ function Tasks() {
             {tasks ? Object.keys(tasks).map(item=>{
                 if(filter === "" || (tasks[item]['status']===filter)){
                     return(
-                        <>
-                        <tr key={item} onClick={()=>editTask(item)}>
+                        <React.Fragment key={item}>
+                        <tr onClick={()=>editTask(item)}>
                             <td>{item}</td>
                             <td>{tasks[item]['title']}</td>
                             <td>{tasks[item]['status']}</td>
@@ -62,8 +62,8 @@ function Tasks() {
                         {filterTaskId(tasks[item]).map(child=>{
                               if(filter === "" || (tasks[item][child]['status']===filter)){
                                 return(
-                                    <tr  onClick={()=>editTask(child)}>
-                                        <td class='child'>{child}</td>
+                                    <tr key={child} onClick={()=>editTask(child)}>
+                                        <td className='child'>{child}</td>
                                         <td>{tasks[item][child]['title']}</td>
                                         <td>{tasks[item][child]['status']}</td>
                                         <td></td>
@@ -71,30 +71,10 @@ function Tasks() {
                                 )
                               }
                         })}
-                        </>
+                        </React.Fragment>
                     )
                 }
-            /*return (
-                <>
-                <tr key={item} onClick={()=>editTask(item)}>
-                    <td>{item}</td>
-                    <td>{tasks[item]['title']}</td>
-                    <td>{tasks[item]['status']}</td>
-                    <td>{dependenciesStatus(tasks, item)}</td>
-                </tr>
-                {filterTaskId(tasks[item]).map(child=>{
-                        return(
-                            <tr  onClick={()=>editTask(child)}>
-                                <td class='child'>{child}</td>
-                                <td>{tasks[item][child]['title']}</td>
-                                <td>{tasks[item][child]['status']}</td>
-                                <td></td>
-                            </tr>
-                        )
-                    })}
-                </>
-            )*/
-            }) : <div class='text-xl'>You don't have any tasks</div> }
+            }) : <div className='text-xl'>You don't have any tasks</div> }
         </tbody>
         </table>
         {displayEditTaskPopup ? <EditTaskPopup taskId={task} props={searchObj(tasks,task)} onClose={()=>setDisplayEditTaskPopup(false)} visible={displayEditTaskPopup}></EditTaskPopup> : null}

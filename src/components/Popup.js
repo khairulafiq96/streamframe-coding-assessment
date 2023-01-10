@@ -49,7 +49,8 @@ function Popup({visible, onClose}){
                                onChange={e=>setTitle(e.target.value)}
                                value={title}></input>
                     </label>
-                    <label htmlFor="status">Status :
+                    <label htmlFor="status">
+                        Status 
                         <select name="status" id="status"
                                 value={status}
                                 onChange={e=>setStatus(e.target.value)}>
@@ -66,7 +67,7 @@ function Popup({visible, onClose}){
                             <option value="">None</option>
                             {tasks ? Object.keys(tasks).map(item=>{
                                 return(
-                                    <option value={item}>{tasks[item]['title']}</option>
+                                    <option key={item} value={item}>{tasks[item]['title']}</option>
                                 )
                             }) : null}
                         </select>

@@ -35,6 +35,7 @@ body.active-modal {
 
 input[type=text] {
   color: black;
+  padding-left: 0.5rem;
 }
 
 select {

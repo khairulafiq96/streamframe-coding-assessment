@@ -36,12 +36,12 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
     },[])
 
     return(
-       <div class='fixed w-screen h-screen 
+       <div className='fixed w-screen h-screen 
                 flex items-center justify-center
                 inset-0 bg-black bg-opacity-30 backdrop-blur-sm'>
-        <div class='bg-slate-500 p-5'>
+        <div className='bg-slate-500 p-5'>
             <div>Edit Task</div>
-            <form class='flex flex-col py-5 space-y-2'>
+            <form className='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
                     <label>Title : 
                         <input type="text" name="title" 
@@ -65,7 +65,7 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
                             <option value="none">None</option>
                             {tasks ? Object.keys(tasks).map(item=>{
                                 return(
-                                    <option value={item}>{tasks[item]['title']}</option>
+                                    <option key={item} value={item}>{tasks[item]['title']}</option>
                                 )
                             }) : <></>}
                         </select>
@@ -73,7 +73,7 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
                 </div>
 
             </form>
-            <div class='flex space-x-5'>
+            <div className='flex space-x-5'>
                 <button onClick={e=>handleSubmit(e)}>Edit Task</button>
                 <button onClick={onClose}> Close</button>
             </div>

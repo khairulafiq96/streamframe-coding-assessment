@@ -6,9 +6,9 @@ import './App.css';
 
 function App() {
   return (
-    <div class='flex flex-col h-screen w-screen bg-slate-500'>
+    <div className='flex flex-col h-screen w-screen'>
       <Header></Header>
-      <div class="flex-auto bg-slate-500 mx-auto container py-5">
+      <div className="flex-auto mx-auto container py-5">
         <Content></Content>
       </div>
       <Footer></Footer>

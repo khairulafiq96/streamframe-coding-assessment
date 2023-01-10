@@ -10,14 +10,7 @@ export default function tasks(state = null, action){
             return {...state, ...action.tasks}
 
         case ADD_CHILDTASK:
-            //TODO : for selecting all of the ID in create task parent selection,
-            //binary tree search DFS/BFS, to search for the parent, and append the values
-            //searching in nested object react
-            //Check out flatten deep object javascript
             const parentKey = getParent(action.tasks)
-            //window.alert(JSON.stringify(getParent(action.tasks)))
-            //Get the parent id inside task
-            //Append the value of state[parentid] values with the payload (task)
             var newParentState = {...state, [parentKey] : {...state[parentKey], ...action.tasks}}
             return updateParentStatus(newParentState, parentKey)
         
