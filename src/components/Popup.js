@@ -44,12 +44,12 @@ function Popup({visible, onClose}){
             <div>Create new task</div>
             <form class='flex flex-col py-5 space-y-2'>
                 <div className="flex space-x-4">
-                    <label>Title {title}: 
+                    <label>Title : 
                         <input type="text" name="title" 
                                onChange={e=>setTitle(e.target.value)}
                                value={title}></input>
                     </label>
-                    <label htmlFor="status">Status {status} :
+                    <label htmlFor="status">Status :
                         <select name="status" id="status"
                                 value={status}
                                 onChange={e=>setStatus(e.target.value)}>
@@ -59,7 +59,7 @@ function Popup({visible, onClose}){
                             <option value="Complete">Complete</option>
                         </select>
                     </label>
-                    <label htmlFor="parent">Parent {parent} :
+                    <label htmlFor="parent">Parent :
                         <select name="parent" id="parent"
                                 value={parent}
                                 onChange={e=>setParent(e.target.value)}>
@@ -73,8 +73,10 @@ function Popup({visible, onClose}){
                     </label>
                 </div>
             </form>
-            <button onClick={e=>handleSubmit(e)}> Create new task</button>
-            <button onClick={onClose}> Close</button>
+            <div class='flex space-x-5'>
+                <button onClick={e=>handleSubmit(e)}>Edit Task</button>
+                <button onClick={onClose}> Close</button>
+            </div>
        </div>
     </div>)
 }

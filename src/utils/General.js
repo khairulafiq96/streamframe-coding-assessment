@@ -35,7 +35,17 @@ export function getParent(target){
     return target[taskKey[0]]['parent']
 }
 
-//Todo : Unable to update the previous parent of the updated status
+
+export function dependenciesStatus(tasks, parentId){
+    var total, complete, done;
+    const child = filterTaskId(tasks[parentId])
+    total = child.length
+    complete = child.filter(task=> tasks[parentId][task]['status'] === 'Complete').length
+    done = child.filter(task=>tasks[parentId][task]['status']==='Done').length
+
+    return (total+'/'+done+'/'+complete)
+}
+
 export function updateParentStatus (obj,parentId){
     const childTasks = filterTaskId(obj[parentId])
     var done = []

@@ -25,7 +25,7 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
         }
 
         dispatch(editTask(obj))
-        
+        onClose()
     }
 
     useEffect(()=>{
@@ -73,8 +73,11 @@ function EditTaskPopup ({props,visible, onClose, taskId}){
                 </div>
 
             </form>
-            <button onClick={e=>handleSubmit(e)}>Edit Task</button>
-            <button onClick={onClose}> Close</button>
+            <div class='flex space-x-5'>
+                <button onClick={e=>handleSubmit(e)}>Edit Task</button>
+                <button onClick={onClose}> Close</button>
+            </div>
+            
        </div>
     </div>
     )

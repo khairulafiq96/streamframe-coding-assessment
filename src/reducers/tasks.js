@@ -35,7 +35,6 @@ export default function tasks(state = null, action){
                 const parentIdState = searchObj(state, taskId)
                 //To update the latest parent
                 if(parentIdState['parent']!==parentId){
-                    window.alert("Deleting item")
                     delete state[parentIdState['parent']][taskId]
                 }
                 var newParentState = {...state, [parentId] : {...state[parentId],
@@ -43,7 +42,7 @@ export default function tasks(state = null, action){
                                                             ...state[parentId][taskId],
                                                             ...action.tasks[taskId]
                                                 }}}
-                //LEL to update the previous parent status, nested function is called
+                //to update the previous parent status, nested function is called
                 return updateParentStatus(updateParentStatus(newParentState, parentIdState['parent']), parentId)
             }
            

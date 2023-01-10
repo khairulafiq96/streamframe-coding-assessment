@@ -9,7 +9,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: white;
+  background-color: #64748b;
+  color : white;
 
 }
 
@@ -46,6 +47,7 @@ table
  border-collapse: collapse;
  text-align: left;
  table-layout: fixed;
+ 
 }
 
 th,td {
@@ -65,3 +67,9 @@ td.child {
 th.right, td.right {
   text-align: right;
 }
+
+label,input{
+  display:flex;
+  flex-direction:column;
+}
+
